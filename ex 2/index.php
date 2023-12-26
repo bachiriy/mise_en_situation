@@ -16,11 +16,29 @@ class User
         return $db->query($query);
 }
 
+    public function getUserById($UserId)
+    {
+        global $db;
+        $sql = "SELECT * FROM users WHERE users_id = ?";
+        $stmt = $db->prepare($sql);
+
+        $stmt->bind_param('i', $UserId);
+        $stmt->execute();
+
+        $result = $stmt->get_result();
+        $user = $result->fetch_assoc();
+
+        $stmt->close();
+        return $user;
+    }
 }
 
 
 $NewUser = User::NewUser('hafsaa','jdfkj', 'jkkdjfd');
 dd($NewUser);
 
+$DisplayUser = new User(3);
+$Test = $DisplayUser->getUserById(3);
+dd($DisplayUser)
 
 ?>
