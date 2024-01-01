@@ -1,5 +1,6 @@
 <?php 
-print_r($_POST)
+require "config.php";
 
+print_r($_POST)
 
 ?>
