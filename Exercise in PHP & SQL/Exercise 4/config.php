@@ -1,24 +1,35 @@
-<?php 
+<?php
 $server = 'localhost';
 $username = 'root';
 $password = '';
-$database = "test";
-
+$database = 'test';
 
 $conn = new mysqli($server, $username, $password, $database);
-if($conn->connect_errno){
-    die ("error a zin" . $conn->connect_errno);
+if ($conn->connect_errno) {
+    die("Error connecting to the database: " . $conn->connect_error);
 }
 
-$name = $_POST['username'];
-$email = $_POST['email'];
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $name = $_POST['username'];
+    $email = $_POST['email'];
 
-$sql = "INSERT INTO form (username, email) VALUES('$name', '$email')";
-        if($conn->query($sql) === TRUE){
-        echo json_encode(['sucess' => true]);
-}else{
-        echo json_encode(['sucess' => false , 'error' => $conn->error]);
+    $sql = "INSERT INTO form (username, email) VALUES (?, ?)";
+    $stmt = $conn->prepare($sql);
+
+    if ($stmt) {
+        $stmt->bind_param("ss", $name, $email);
+        if ($stmt->execute()) {
+            echo json_encode(['success' => true]);
+        } else {
+            echo json_encode(['success' => false, 'error' => $stmt->error]);
+        }
+        $stmt->close();
+    } else {
+        echo json_encode(['success' => false, 'error' => $conn->error]);
     }
+} else {
+  
+}
 
 $conn->close();
 ?>

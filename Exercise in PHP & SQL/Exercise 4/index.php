@@ -23,10 +23,9 @@ require "config.php";
       <input type="submit" value="Submit">
   </form>
 
-
   <script>
     const userForm = document.getElementById('userForm');
-    userForm.addEventListener('submit', function(event) {
+    userForm.addEventListener('submit', function(event){
     event.preventDefault();
 
     const formData = new FormData(userForm);
@@ -40,6 +39,5 @@ require "config.php";
     });
     });
  </script>
- 
 </body>
 </html>
