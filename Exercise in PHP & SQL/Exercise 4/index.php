@@ -26,10 +26,10 @@ require "config.php";
   <script>
     const userForm = document.getElementById('userForm');
     userForm.addEventListener('submit', function(event){
-    event.preventDefault();
+    event.preventDefault(); //to prevent the page to reload
 
     const formData = new FormData(userForm);
-    fetch('formBE.php', {
+    fetch('formBE.php', { //a fetch api
         method: 'POST',
         body: formData
     })
